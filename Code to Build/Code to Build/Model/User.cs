@@ -2,8 +2,11 @@
 
 namespace Code_to_Build.Model
 {
-    public class Registration
+    public class User
     {
+        [Required]
+        public int Id { get; set; }
+
         [RegularExpression(@"^[a-zA-Z]+(?:[' -][a-zA-Z]+)*$", ErrorMessage = "Invalid first name")]
         public string FirstName { get; set; }
 
@@ -11,7 +14,7 @@ namespace Code_to_Build.Model
         public string LastName { get; set; }
 
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Mobile number must be a 10-digit number")]
-        public string MobileNumber {  get; set; }
+        public string MobileNumber { get; set; }
 
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
@@ -21,6 +24,6 @@ namespace Code_to_Build.Model
         public string Password { get; set; }
 
         [Compare("Password", ErrorMessage = "Passwords do not match")]
-        public string ConfirmPassword {  get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }

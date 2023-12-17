@@ -16,7 +16,7 @@ namespace Code_to_Build.Controllers
         [HttpGet("login/{id}")]
         public async Task<ActionResult> Index(int id)
         {
-            var user = _context.users.FindAsync(id);
+            var user = _context.Users.FindAsync(id);
 
             if (user == null)
             {

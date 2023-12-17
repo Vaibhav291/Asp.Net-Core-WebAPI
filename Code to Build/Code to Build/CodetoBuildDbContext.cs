@@ -9,6 +9,7 @@ namespace Code_to_Build
         : base(options)
         {
         }
-        public DbSet<User> users { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
     }
 }

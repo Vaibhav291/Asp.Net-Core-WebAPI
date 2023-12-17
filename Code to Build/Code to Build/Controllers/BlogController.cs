@@ -18,7 +18,7 @@ namespace Code_to_Build.Controllers
         [HttpPost("blog/Add")]
         public async Task<IActionResult> AddBlog([FromBody] Blog blog)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -30,16 +30,16 @@ namespace Code_to_Build.Controllers
         }
 
         [HttpPut("blog/Edit/{id}")]
-        public async Task<IActionResult> EditBlog(int id,[FromBody] Blog blog)
+        public async Task<IActionResult> EditBlog(int id, [FromBody] Blog blog)
         {
             var blogUpdate = await _context.Blogs.FindAsync(id);
- 
-            if(!ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if(blogUpdate == null)
+            if (blogUpdate == null)
             {
                 return NotFound($"Blog with Id = {id} not found");
             }
@@ -69,12 +69,37 @@ namespace Code_to_Build.Controllers
             return Ok("Blog is Deleted");
         }
 
-        [HttpGet("blog/allblogs")]
+        [HttpGet("AllBlogs")]
         public async Task<IActionResult> GetAllBlogs()
         {
-            var allBlogs = await _context.Blogs.ToListAsync();
-            return Ok(allBlogs);
+            var allBlog = await _context.Blogs.ToListAsync();
+            return Ok(allBlog);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddFeedback([FromBody] Blog blog)
+        {
+            var feedback = await _context.Blogs.FindAsync(blog.Id);
+
+            feedback.Like = blog.Like + 1;
+            feedback.Comments = blog.Comments;
+
+            _context.Blogs.Add(feedback);
+            await _context.SaveChangesAsync();
+            return Ok("Feedback updated");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateFeedback([FromBody] Blog blog) 
+        {
+            var feedback = await _context.Blogs.FindAsync(blog.Id);
+            
+            feedback.Like = blog.Like - 1;
+            feedback.Comments = blog.Comments;
+
+            _context.Blogs.Update(feedback);
+            await _context.SaveChangesAsync();
+            return Ok("Feedback Added");
+        }
     }
 }

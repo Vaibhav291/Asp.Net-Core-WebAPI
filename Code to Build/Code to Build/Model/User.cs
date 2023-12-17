@@ -4,7 +4,7 @@ namespace Code_to_Build.Model
 {
     public class User
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
 
         [RegularExpression(@"^[a-zA-Z]+(?:[' -][a-zA-Z]+)*$", ErrorMessage = "Invalid first name")]

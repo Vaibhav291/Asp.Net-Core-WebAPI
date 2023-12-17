@@ -23,7 +23,7 @@ namespace Code_to_Build.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.users.Add(registration);
+            _context.Users.Add(registration);
             await _context.SaveChangesAsync();
 
             return Ok("Registration Successfull");

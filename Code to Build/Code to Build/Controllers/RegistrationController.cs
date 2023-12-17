@@ -15,18 +15,27 @@ namespace Code_to_Build.Controllers
             _context = context;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Index([FromBody] User registration)
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] User registration)
         {
-            if (!ModelState.IsValid)
+            bool EmailExistis = _context.Users.Any(x =>  x.Email == registration.Email);
+            if (EmailExistis)
             {
-                return BadRequest(ModelState);
+                return BadRequest("User already exist");
             }
 
-            _context.Users.Add(registration);
+            User user = new User();
+            user.FirstName = registration.FirstName;
+            user.LastName = registration.LastName;
+            user.MobileNumber = registration.MobileNumber;
+            user.Email = registration.Email;
+            user.Password = registration.Password;
+            user.ConfirmPassword = registration.ConfirmPassword;
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok("Registration Successfull");
+            return RedirectToAction("Blog", "GetAllBlogs");
+            
         }
     }
 }    

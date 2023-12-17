@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Code_to_Build.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Code_to_Build.Controllers
 {
@@ -13,17 +14,18 @@ namespace Code_to_Build.Controllers
             _context = context;
         }
 
-        [HttpGet("login/{id}")]
-        public async Task<ActionResult> Index(int id)
+        [HttpGet("login")]
+        public async Task<ActionResult> Index([FromBody] User user)
         {
-            var user = _context.Users.FindAsync(id);
-
-            if (user == null)
+            bool existis = _context.Users.Any(_user => _user.Email == user.Email && _user.Password==user.Password);
+            if (existis)
             {
-                return NotFound("User not found");
+                ISession session = HttpContext.Session;
+                session.SetInt32("UserId", _context.Users.Single(x => x.Email == user.Email).Id);
+                return RedirectToAction("GetAllBlogs","Blog");
             }
 
-            return Ok("Login Successfull");
+            return NoContent();
         }
     }
 }

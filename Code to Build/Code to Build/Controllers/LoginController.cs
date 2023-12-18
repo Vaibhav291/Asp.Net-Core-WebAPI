@@ -1,4 +1,5 @@
 ﻿using Code_to_Build.Model;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Code_to_Build.Controllers

@@ -1,4 +1,5 @@
 ﻿using Code_to_Build.Model;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace Code_to_Build.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] User registration)
         {
             bool EmailExistis = _context.Users.Any(x =>  x.Email == registration.Email);
@@ -34,7 +35,7 @@ namespace Code_to_Build.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Blog", "GetAllBlogs");
+            return Json(Ok());
             
         }
     }

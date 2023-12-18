@@ -14,8 +14,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CodetoBuildDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-var app = builder.Build();
 
+builder.Services.AddCors();
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -24,6 +25,15 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseCors(builder => 
+{   
+    builder
+    .AllowAnyHeader()
+    .AllowAnyOrigin()
+    .AllowAnyMethod();
+});
+
+app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseEndpoints(endpoints =>
@@ -31,9 +41,13 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-app.UseHttpsRedirection();
+
+
+
 
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 

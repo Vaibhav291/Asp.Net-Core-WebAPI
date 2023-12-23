@@ -9,6 +9,9 @@ namespace Code_to_Build.Model
         public int Id { get; set; }
 
         [Required]
+        public string? Type { get; set; }
+
+        [Required]
         [RegularExpression(@"^[a-zA-Z]+(?:[' -][a-zA-Z]+)*$", ErrorMessage = "Invalid first name")]
         public string? FirstName { get; set; }
 

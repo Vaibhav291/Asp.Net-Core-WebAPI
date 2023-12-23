@@ -26,6 +26,7 @@ namespace Code_to_Build.Controllers
             }
 
             User user = new User();
+            user.Type = registration.Type;
             user.FirstName = registration.FirstName;
             user.LastName = registration.LastName;
             user.MobileNumber = registration.MobileNumber;
